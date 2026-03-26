@@ -48,25 +48,26 @@
 </head>
 <body>
 
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
 <!-- ANNOUNCEMENT BAR -->
 <div class="announcement-bar">
-  <span>✦ Free shipping on orders over ₹2,500</span>
-  <span>·</span>
-  <span>Each stitch takes 4 hours of love &amp; skill</span>
-  <span>·</span>
-  <span>Made by India's grandmothers ✦</span>
+  <div class="announcement-bar-inner">
+    <span>✦ Free shipping on orders over ₹2,500</span><span>·</span>
+    <span>Each stitch takes 4 hours of love &amp; skill</span><span>·</span>
+    <span>Made by India's grandmothers ✦</span><span>·</span>
+    <span>✦ Free shipping on orders over ₹2,500</span><span>·</span>
+    <span>Each stitch takes 4 hours of love &amp; skill</span><span>·</span>
+    <span>Made by India's grandmothers ✦</span><span>·</span>
+  </div>
 </div>
 
 <!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="14" cy="14" r="13" stroke="#C4714F" stroke-width="1.5" fill="none"/>
-        <path d="M8 14 Q11 8, 14 14 Q17 20, 20 14" stroke="#C4714F" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-        <circle cx="8" cy="14" r="1.5" fill="#C4714F"/>
-        <path d="M8 10 L8 6 L10 6" stroke="#6B4226" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <img src="logo.jpeg" alt="Dadi's Stitches" class="nav-logo-img" />
       Dadi's Stitches
     </a>
     <div class="nav-links">
@@ -93,7 +94,10 @@
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-menu-head">
-    <span class="nav-logo" style="font-size:1.2rem;">Dadi's Stitches</span>
+    <a href="index.html" class="nav-logo" style="font-size:1.2rem;">
+      <img src="logo.jpeg" alt="Dadi's Stitches" class="nav-logo-img" />
+      Dadi's Stitches
+    </a>
     <button class="mobile-close" onclick="closeMenu()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
@@ -936,6 +940,15 @@
   // Mobile menu
   function openMenu() { document.getElementById('mobileMenu').classList.add('open'); }
   function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // Scroll progress bar
+  window.addEventListener('scroll', () => {
+    const el = document.getElementById('scrollProgress');
+    if (el) { const p = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100; el.style.width = p + '%'; }
+    // Nav shadow on scroll
+    const nav = document.querySelector('.nav');
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
 
   // Newsletter
   function handleNewsletter(e) {

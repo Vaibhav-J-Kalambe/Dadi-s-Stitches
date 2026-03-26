@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Order — Dadi's Stitches | Your Vision, Her Hands</title>
+  <meta name="description" content="Request a bespoke hand-embroidered shirt. Tell us your story, we'll find the perfect Dadi whose hands are made for your design." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- CUSTOM ORDER PAGE ---- */
+    .custom-hero {
+      background: linear-gradient(135deg, #FFF8EF 0%, #FDEBD0 55%, #F8D5A8 100%);
+      padding: 100px 0 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .custom-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 40%, rgba(200,151,58,.08) 0%, transparent 55%),
+                  radial-gradient(ellipse at 20% 80%, rgba(196,113,79,.06) 0%, transparent 50%);
+    }
+    .custom-hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .custom-hero h1 { color: var(--brown-dark); margin-bottom: 20px; }
+    .custom-hero h1 em {
+      background: linear-gradient(90deg, var(--terracotta), #C8973A, var(--terracotta));
+      background-size: 300% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-shift 4s ease infinite;
+    }
+    .custom-hero p { color: var(--text-mid); font-size: 1rem; margin-bottom: 28px; line-height: 1.7; }
+    .custom-hero-art {
+      background: rgba(255,255,255,.4);
+      border: 1px solid rgba(196,113,79,.15);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; gap: 20px;
+      min-height: 360px;
+      box-shadow: 0 12px 36px rgba(44,24,16,.04);
+    }
+    .custom-hero-art span {
+      font-family: var(--font-script); font-size: 1.6rem;
+      color: var(--terracotta); line-height: 1.4;
+    }
+    .custom-hero-art p { color: var(--text-light); font-size: 0.8rem; font-family: var(--font-sans); }
+
+    /* How it works */
+    .how-section { background: var(--cream); padding: 100px 0; }
+    .how-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; margin-top: 60px; position: relative; }
+    .how-steps::before {
+      content: '';
+      position: absolute; top: 52px; left: 12%; right: 12%;
+      height: 2px;
+      background: linear-gradient(to right, var(--terracotta), var(--gold), var(--sage));
+    }
+    .how-step {
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+      padding: 0 16px; position: relative; z-index: 1;
+    }
+    .how-step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: white; border: 3px solid var(--terracotta);
+      font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700;
+      color: var(--terracotta);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      box-shadow: 0 0 0 8px rgba(196,113,79,.08);
+      transition: all 0.4s ease;
+    }
+    .how-step:hover .how-step-num {
+      background: var(--terracotta); color: white;
+      box-shadow: 0 0 0 12px rgba(196,113,79,.12), 0 8px 24px rgba(196,113,79,.3);
+      transform: scale(1.1);
+    }
+    .how-step h4 { font-family: var(--font-serif); color: var(--brown-dark); margin-bottom: 8px; }
+    .how-step p { font-size: 0.86rem; color: var(--text-mid); }
+
+    /* Pricing guide */
+    .price-guide { background: var(--paper); padding: 80px 0; }
+    .price-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; margin-top: 48px; }
+    .price-card {
+      background: white; border-radius: var(--radius-lg);
+      border: 1.5px solid var(--border);
+      padding: 32px; text-align: center;
+      transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      position: relative; overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .price-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--terracotta); }
+    .price-card.featured { border-color: var(--terracotta); background: var(--cream); }
+    .price-card.featured::before {
+      content: 'Most Popular';
+      position: absolute; top: 16px; right: -24px;
+      background: var(--terracotta); color: white;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 4px 32px;
+      transform: rotate(45deg);
+    }
+    .price-card-icon { margin: 0 auto 20px; }
+    .price-card h3 { font-family: var(--font-serif); color: var(--brown-dark); margin-bottom: 8px; }
+    .price-card-amount { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--terracotta); margin: 16px 0; }
+    .price-card-amount span { font-size: 0.9rem; color: var(--text-light); font-weight: 400; font-family: var(--font-sans); }
+    .price-card ul { list-style: none; text-align: left; margin-bottom: 24px; }
+    .price-card ul li { font-size: 0.88rem; color: var(--text-mid); padding: 6px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+    .price-card ul li::before { content: '✓'; color: var(--sage); font-weight: 700; flex-shrink: 0; }
+
+    /* ORDER FORM */
+    .order-form-section { background: var(--warm-white); padding: 100px 0; }
+    .order-form-wrap {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .form-header {
+      background: var(--brown-dark);
+      padding: 40px 48px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .form-header-text h2 { color: white; margin-bottom: 6px; font-size: 1.6rem; }
+    .form-header-text p { color: rgba(255,255,255,.55); font-size: 0.9rem; margin: 0; }
+    .form-body { padding: 48px; }
+    .form-section-title {
+      font-family: var(--font-serif); font-size: 1rem; font-weight: 600;
+      color: var(--brown-dark); margin-bottom: 20px;
+      padding-bottom: 10px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .form-section-title svg { color: var(--terracotta); }
+    .form-section-block { margin-bottom: 40px; }
+    .style-chips { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0 24px; }
+    .style-chip {
+      padding: 8px 18px; border-radius: var(--radius-pill);
+      border: 1.5px solid var(--border-dark);
+      font-size: 0.82rem; font-weight: 500; color: var(--text-mid);
+      cursor: pointer; transition: all 0.25s ease;
+      background: transparent;
+    }
+    .style-chip:hover, .style-chip.selected {
+      background: var(--brown-dark); color: white; border-color: var(--brown-dark);
+    }
+    .fabric-chips { display: flex; gap: 12px; flex-wrap: wrap; margin: 12px 0 24px; }
+    .fabric-chip {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 12px 20px; border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-dark);
+      cursor: pointer; transition: all 0.25s ease;
+      font-size: 0.8rem; font-weight: 600; color: var(--text-mid);
+    }
+    .fabric-chip .swatch { width: 36px; height: 36px; border-radius: 50%; }
+    .fabric-chip:hover, .fabric-chip.selected { border-color: var(--terracotta); color: var(--terracotta); background: var(--peach-light); }
+    .upload-zone {
+      border: 2px dashed var(--border-dark);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+    .upload-zone:hover { border-color: var(--terracotta); background: var(--peach-light); }
+    .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .upload-zone-icon { margin: 0 auto 16px; }
+    .form-submit-wrap {
+      background: var(--cream); border-radius: var(--radius-lg);
+      padding: 32px; margin-top: 12px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; flex-wrap: wrap;
+    }
+    .form-submit-details { flex: 1; }
+    .form-submit-details h4 { font-family: var(--font-serif); color: var(--brown-dark); margin-bottom: 4px; }
+    .form-submit-details p { font-size: 0.82rem; color: var(--text-light); margin: 0; }
+
+    /* Success state */
+    .form-success {
+      display: none; text-align: center; padding: 80px 48px;
+    }
+    .form-success.show { display: block; animation: bounce-in 0.6s ease; }
+    .form-success svg { margin: 0 auto 24px; }
+    .form-success h2 { color: var(--brown-dark); margin-bottom: 12px; }
+    .form-success p { color: var(--text-mid); max-width: 440px; margin: 0 auto 28px; }
+
+    @media (max-width: 1024px) {
+      .custom-hero-grid { grid-template-columns: 1fr; }
+      .custom-hero-art { display: none; }
+      .how-steps { grid-template-columns: repeat(2,1fr); gap: 32px; }
+      .how-steps::before { display: none; }
+      .price-cards { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+    }
+    @media (max-width: 768px) {
+      .custom-hero { padding: 72px 0 52px; }
+      .custom-hero h1 { font-size: clamp(2rem, 8vw, 3rem); }
+      .custom-hero-grid { grid-template-columns: 1fr; }
+      .how-steps { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .how-steps::before { display: none; }
+      .price-cards { grid-template-columns: 1fr; }
+      .form-header { padding: 24px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+      .form-body { padding: 24px 16px; }
+      .form-submit-wrap { flex-direction: column; align-items: stretch; }
+      .form-submit-wrap .btn { width: 100%; justify-content: center; }
+      .style-chips { gap: 8px; }
+      .fabric-chips { gap: 8px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
+      .fabric-chip { flex-shrink: 0; }
+      .upload-zone { padding: 28px 16px; }
+      .how-section { padding: 60px 0; }
+      .price-guide { padding: 56px 0; }
+    }
+    @media (max-width: 480px) {
+      .how-steps { grid-template-columns: 1fr; }
+      .price-card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announcement-bar">
+  <div class="announcement-bar-inner">
+    <span>✦ Custom orders: Your design, their hands</span><span>·</span>
+    <span>Every shirt minimum 4 hours of craft</span><span>·</span>
+    <span>₹400 fair wage guaranteed ✦</span><span>·</span>
+    <span>✦ Custom orders: Your design, their hands</span><span>·</span>
+    <span>Every shirt minimum 4 hours of craft</span><span>·</span>
+    <span>₹400 fair wage guaranteed ✦</span><span>·</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="logo.jpeg" alt="Dadi's Stitches" class="nav-logo-img" />
+      Dadi's Stitches
+    </a>
+    <div class="nav-links">
+      <a href="shop.html">Shop</a>
+      <a href="our-story.html">Our Story</a>
+      <a href="custom-order.html" class="active">Custom Orders</a>
+      <a href="index.html#process">How It's Made</a>
+    </div>
+    <div class="nav-actions">
+      <a href="shop.html" class="nav-cta">Shop Now</a>
+      <button class="nav-cart" onclick="alert('Cart coming soon!')" aria-label="Cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-badge">0</span>
+      </button>
+      <button class="nav-hamburger" onclick="openMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-head">
+    <a href="index.html" class="nav-logo" style="font-size:1.2rem;">
+      <img src="logo.jpeg" alt="Dadi's Stitches" class="nav-logo-img" />
+      Dadi's Stitches
+    </a>
+    <button class="mobile-close" onclick="closeMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu-links">
+    <a href="shop.html" onclick="closeMenu()">Shop</a>
+    <a href="our-story.html" onclick="closeMenu()">Our Story</a>
+    <a href="custom-order.html" onclick="closeMenu()">Custom Orders</a>
+    <a href="index.html#process" onclick="closeMenu()">How It's Made</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="custom-hero">
+  <div class="container custom-hero-grid">
+    <div>
+      <div class="section-label">Bespoke Orders</div>
+      <h1>Your vision.<br/><em>Her hands.</em><br/>One beautiful shirt.</h1>
+      <p>Tell us the story you want stitched — a childhood memory, a floral you love, a name that means everything. We'll find the Dadi whose craft was made for it.</p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:32px;">
+        <div style="display:flex; align-items:center; gap:8px; background:white; border:1px solid var(--border); border-radius:var(--radius-pill); padding:8px 16px; box-shadow: 0 2px 8px rgba(44,24,16,.04);">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="var(--terracotta)" stroke-width="1.2"/><path d="M5 7 L6.5 8.5 L9 5.5" stroke="var(--terracotta)" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <span style="font-size:0.82rem; color:var(--text-mid);">4 – 8 hr craftsmanship</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; background:white; border:1px solid var(--border); border-radius:var(--radius-pill); padding:8px 16px; box-shadow: 0 2px 8px rgba(44,24,16,.04);">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="var(--terracotta)" stroke-width="1.2"/><path d="M5 7 L6.5 8.5 L9 5.5" stroke="var(--terracotta)" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <span style="font-size:0.82rem; color:var(--text-mid);">From ₹800 + Dadi hours</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; background:white; border:1px solid var(--border); border-radius:var(--radius-pill); padding:8px 16px; box-shadow: 0 2px 8px rgba(44,24,16,.04);">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="var(--terracotta)" stroke-width="1.2"/><path d="M5 7 L6.5 8.5 L9 5.5" stroke="var(--terracotta)" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <span style="font-size:0.82rem; color:var(--text-mid);">Handwritten note from your Dadi</span>
+        </div>
+      </div>
+      <a href="#order-form" class="btn btn-primary btn-lg">Start Your Order ↓</a>
+    </div>
+    <div class="custom-hero-art">
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+        <circle cx="40" cy="40" r="38" stroke="rgba(196,113,79,0.3)" stroke-width="1.5" stroke-dasharray="8 5"/>
+        <path d="M40 18 L40 62 M18 40 L62 40" stroke="rgba(196,113,79,0.7)" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M28 28 Q40 20 52 28 Q60 40 52 52 Q40 60 28 52 Q20 40 28 28Z" fill="none" stroke="rgba(196,113,79,0.25)" stroke-width="1.5"/>
+        <circle cx="40" cy="40" r="8" fill="rgba(196,113,79,.1)" stroke="rgba(196,113,79,.6)" stroke-width="1.5"/>
+      </svg>
+      <span>"Your childhood memory.<br/>Her lifetime of skill.<br/>One beautiful shirt."</span>
+      <p>Bespoke orders start at ₹800 + labor hours</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="container">
+    <div class="text-center reveal">
+      <div class="section-label" style="justify-content:center;">The Process</div>
+      <h2>Simple, personal,<br/><em>beautifully human</em></h2>
+    </div>
+    <div class="how-steps">
+      <div class="how-step reveal reveal-delay-1">
+        <div class="how-step-num">1</div>
+        <h4>You Submit Your Vision</h4>
+        <p>Fill in the form below. Describe your idea, upload a reference — or just tell us a feeling. No design skills needed.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-2">
+        <div class="how-step-num">2</div>
+        <h4>We Find Your Dadi</h4>
+        <p>Based on your design style, we match you with the Dadi whose specialty fits your vision perfectly.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-3">
+        <div class="how-step-num">3</div>
+        <h4>She Stitches It</h4>
+        <p>Your Dadi begins. 4 to 8 hours of patient, careful work. This is not rushed. This is love at its own pace.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-4">
+        <div class="how-step-num">4</div>
+        <h4>Delivered with Love</h4>
+        <p>Packed by hand, with a personal note from your Dadi. Delivered across India in 7–12 days.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING GUIDE -->
+<section class="price-guide">
+  <div class="container">
+    <div class="text-center reveal">
+      <div class="section-label" style="justify-content:center;">Transparent Pricing</div>
+      <h2>Every rupee is<br/><em>honestly accounted for</em></h2>
+    </div>
+    <div class="price-cards">
+      <div class="price-card reveal reveal-delay-1">
+        <div class="price-card-icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="var(--terracotta)" stroke-width="1.5" fill="rgba(196,113,79,.06)"/><path d="M12 20 L17 25 L28 14" stroke="var(--terracotta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Simple Design</h3>
+        <p style="font-size:0.85rem; color:var(--text-light); margin-bottom:0;">A motif, monogram, or small floral</p>
+        <div class="price-card-amount">₹800 – ₹1,200 <span>total</span></div>
+        <ul>
+          <li>1 main motif or design element</li>
+          <li>4 – 5 hours embroidery</li>
+          <li>Dadi note included</li>
+          <li>Any fabric from our collection</li>
+          <li>Free shipping over ₹2,500</li>
+        </ul>
+        <a href="#order-form" class="btn btn-ghost btn-full">Get Started</a>
+      </div>
+
+      <div class="price-card featured reveal reveal-delay-2">
+        <div class="price-card-icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M20 4 L24 14 L34 14 L26 20 L29 30 L20 24 L11 30 L14 20 L6 14 L16 14 Z" stroke="var(--gold)" stroke-width="1.5" fill="rgba(200,151,58,.1)"/></svg>
+        </div>
+        <h3>Heritage Design</h3>
+        <p style="font-size:0.85rem; color:var(--text-light); margin-bottom:0;">Full embroidery with multiple motifs</p>
+        <div class="price-card-amount">₹1,500 – ₹2,500 <span>total</span></div>
+        <ul>
+          <li>Full chest / back embroidery</li>
+          <li>6 – 8 hours craftsmanship</li>
+          <li>Dadi note + process photos</li>
+          <li>Premium fabric upgrade available</li>
+          <li>Free shipping included</li>
+        </ul>
+        <a href="#order-form" class="btn btn-primary btn-full">Most Popular</a>
+      </div>
+
+      <div class="price-card reveal reveal-delay-3">
+        <div class="price-card-icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M8 14 L8 32 Q8 34 10 34 L30 34 Q32 34 32 32 L32 14 L20 8 Z" stroke="var(--sage)" stroke-width="1.5" fill="rgba(91,122,82,.06)"/><path d="M8 14 L20 8 L32 14" stroke="var(--sage)" stroke-width="1.5" fill="none"/></svg>
+        </div>
+        <h3>Heirloom Piece</h3>
+        <p style="font-size:0.85rem; color:var(--text-light); margin-bottom:0;">A museum-quality wearable art piece</p>
+        <div class="price-card-amount">₹3,000+ <span>total</span></div>
+        <ul>
+          <li>Full garment embroidery coverage</li>
+          <li>10+ hours by master Dadi</li>
+          <li>Certificate of authenticity</li>
+          <li>Premium linen / organic cotton</li>
+          <li>Priority shipping + packaging</li>
+        </ul>
+        <a href="#order-form" class="btn btn-ghost btn-full">Commission This</a>
+      </div>
+    </div>
+    <p style="text-align:center; font-size:0.82rem; color:var(--text-light); margin-top:24px; font-style:italic;">All prices include ₹400 minimum fair wage to your Dadi. Base shirt price + Dadi hours = your total.</p>
+  </div>
+</section>
+
+<!-- ORDER FORM -->
+<section class="order-form-section" id="order-form">
+  <div class="container">
+    <div class="text-center reveal" style="margin-bottom:48px;">
+      <div class="section-label" style="justify-content:center;">Ready to Begin?</div>
+      <h2>Tell us your story.<br/><em>We'll handle the rest.</em></h2>
+    </div>
+    <div class="order-form-wrap reveal">
+      <div class="form-header">
+        <img src="logo.jpeg" alt="Dadi's Stitches" style="width:52px;height:52px;object-fit:contain;border-radius:50%;background:rgba(255,255,255,.1);padding:4px;flex-shrink:0;" />
+        <div class="form-header-text">
+          <h2>Custom Order Request</h2>
+          <p>We'll review your request and email you a personalised quote within 24–48 hours.</p>
+        </div>
+      </div>
+
+      <div class="form-body" id="orderFormBody">
+        <form id="orderForm" onsubmit="submitOrder(event)">
+
+          <!-- Section 1: You -->
+          <div class="form-section-block">
+            <div class="form-section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20 Q4 16 12 16 Q20 16 20 20"/></svg>
+              About You
+            </div>
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-label" for="firstName">First Name *</label>
+                <input type="text" id="firstName" class="form-input" placeholder="Priya" required />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="lastName">Last Name *</label>
+                <input type="text" id="lastName" class="form-input" placeholder="Mehta" required />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="email">Email Address *</label>
+                <input type="email" id="email" class="form-input" placeholder="priya@email.com" required />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="phone">WhatsApp / Phone *</label>
+                <input type="tel" id="phone" class="form-input" placeholder="+91 98765 43210" required />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="city">City</label>
+                <input type="text" id="city" class="form-input" placeholder="Mumbai" />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="budget">Budget Range</label>
+                <select id="budget" class="form-select">
+                  <option value="">Select your budget</option>
+                  <option>₹800 – ₹1,200 (Simple)</option>
+                  <option>₹1,200 – ₹2,000 (Standard)</option>
+                  <option>₹2,000 – ₹3,000 (Heritage)</option>
+                  <option>₹3,000+ (Heirloom)</option>
+                  <option>Flexible — just make it beautiful</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Shirt -->
+          <div class="form-section-block">
+            <div class="form-section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>
+              The Shirt
+            </div>
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-label" for="garmentType">Garment Type *</label>
+                <select id="garmentType" class="form-select" required>
+                  <option value="">Choose type</option>
+                  <option>Shirt (button-down)</option>
+                  <option>Tee (round neck)</option>
+                  <option>Tee (V-neck)</option>
+                  <option>Kurta</option>
+                  <option>I have my own fabric/garment</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="size">Your Size *</label>
+                <select id="size" class="form-select" required>
+                  <option value="">Choose size</option>
+                  <option>XS</option><option>S</option><option>M</option>
+                  <option>L</option><option>XL</option><option>XXL</option>
+                  <option>Custom measurements</option>
+                </select>
+              </div>
+            </div>
+            <label class="form-label" style="margin-bottom:8px; display:block;">Fabric Preference</label>
+            <div class="fabric-chips" id="fabricChips">
+              <button type="button" class="fabric-chip" onclick="selectFabric(this)">
+                <div class="swatch" style="background:repeating-linear-gradient(0deg,rgba(255,255,255,0) 0px,rgba(255,255,255,0) 8px,rgba(180,200,220,.4) 8px,rgba(180,200,220,.4) 10px),linear-gradient(135deg,#C8DCF0,#A8C4E4);"></div>
+                Seersucker
+              </button>
+              <button type="button" class="fabric-chip" onclick="selectFabric(this)">
+                <div class="swatch" style="background:linear-gradient(135deg,#F0E8D0,#DDD0B4);"></div>
+                Linen
+              </button>
+              <button type="button" class="fabric-chip" onclick="selectFabric(this)">
+                <div class="swatch" style="background:linear-gradient(135deg,#E8EAD8,#D4D8B8);"></div>
+                Organic Cotton
+              </button>
+              <button type="button" class="fabric-chip" onclick="selectFabric(this)">
+                <div class="swatch" style="background:linear-gradient(135deg,#2A2A2A,#1A1A1A);"></div>
+                Black Cotton
+              </button>
+              <button type="button" class="fabric-chip" onclick="selectFabric(this)">
+                <div class="swatch" style="background:linear-gradient(135deg,#2A3C5A,#1A2C4A);"></div>
+                Navy Cotton
+              </button>
+              <button type="button" class="fabric-chip" onclick="selectFabric(this)">
+                <div class="swatch" style="background: conic-gradient(#C4714F,#F5C842,#6B9060,#C4714F);"></div>
+                Surprise Me
+              </button>
+            </div>
+          </div>
+
+          <!-- Section 3: Design -->
+          <div class="form-section-block">
+            <div class="form-section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+              Your Design Vision
+            </div>
+            <label class="form-label" style="margin-bottom:8px; display:block;">Embroidery Style (pick all that apply)</label>
+            <div class="style-chips" id="styleChips">
+              <button type="button" class="style-chip" onclick="toggleStyle(this)">Sunflowers</button>
+              <button type="button" class="style-chip" onclick="toggleStyle(this)">Wildflowers</button>
+              <button type="button" class="style-chip" onclick="toggleStyle(this)">Botanical / Leaves</button>
+              <button type="button" class="style-chip" onclick="toggleStyle(this)">Roses</button>
+              <button type="button" class="style-chip" onclick="toggleStyle(this)">Poppies</button>
+              <button type="button" class="style-chip" onclick="toggleStyle(this)">Daisies</button>
+              <button type="button" class="style-chip" onclick="toggleStyle(this)">Mandala / Geometric</button>
+              <button type="button" class="style-chip" onclick="toggleStyle(this)">Monogram / Name</button>
+              <button type="button" class="style-chip" onclick="toggleStyle(this)">Landscape / Scenery</button>
+              <button type="button" class="style-chip" onclick="toggleStyle(this)">Animals / Birds</button>
+              <button type="button" class="style-chip" onclick="toggleStyle(this)">Completely Custom</button>
+            </div>
+            <div class="form-field full" style="margin-top:8px;">
+              <label class="form-label" for="vision">Tell Us Your Story *</label>
+              <textarea id="vision" class="form-textarea" rows="5" placeholder="Describe your design idea in as much detail as you like. It could be a feeling, a memory, a person, a place — anything that matters to you. The more you tell us, the better we can match you with the perfect Dadi." required style="min-height:140px;"></textarea>
+            </div>
+            <div class="form-field full" style="margin-top:16px;">
+              <label class="form-label" style="display:block; margin-bottom:8px;">Reference Image (optional)</label>
+              <div class="upload-zone" id="uploadZone">
+                <input type="file" id="refImage" accept="image/*" onchange="handleUpload(this)" />
+                <svg class="upload-zone-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="1.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <p style="font-size:0.9rem; color:var(--text-mid); margin-bottom:6px;"><strong style="color:var(--terracotta);">Click to upload</strong> or drag an image here</p>
+                <p style="font-size:0.78rem; color:var(--text-light); margin:0;">Supports JPG, PNG, WEBP · Max 10MB</p>
+                <div id="uploadPreview" style="display:none; margin-top:16px;"></div>
+              </div>
+            </div>
+            <div class="form-field full" style="margin-top:16px;">
+              <label class="form-label" for="occasion">What's the occasion?</label>
+              <select id="occasion" class="form-select">
+                <option value="">Choose occasion (optional)</option>
+                <option>Gift for someone special</option>
+                <option>Birthday / Anniversary</option>
+                <option>Wedding / Celebration</option>
+                <option>Just for me</option>
+                <option>Corporate / Event gifting</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-field full" style="margin-top:16px;">
+              <label class="form-label" for="deadline">Any Deadline?</label>
+              <input type="date" id="deadline" class="form-input" style="max-width:280px;" />
+              <p style="font-size:0.78rem; color:var(--text-light); margin-top:6px;">Standard: 12–18 days from order confirmation. Rush available for extra fee.</p>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="form-submit-wrap">
+            <div class="form-submit-details">
+              <h4>Ready to send your vision?</h4>
+              <p>We'll review everything and send you a personalised quote within 24–48 hours on WhatsApp & email.</p>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Submit My Request
+            </button>
+          </div>
+        </form>
+
+        <!-- Success state -->
+        <div class="form-success" id="formSuccess">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+            <circle cx="36" cy="36" r="34" stroke="var(--sage)" stroke-width="2" fill="rgba(91,122,82,.08)"/>
+            <path d="M22 36 L31 45 L50 26" stroke="var(--sage)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h2>Your request is on its way!</h2>
+          <p>A Dadi's Stitches team member will review your vision and reach out within 24–48 hours with a personalised quote and your matched Dadi.</p>
+          <a href="shop.html" class="btn btn-primary">Browse Ready Designs While You Wait</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-logo">
+          <img src="logo.jpeg" alt="Dadi's Stitches" style="width:32px;height:32px;object-fit:contain;border-radius:50%;" />
+          Dadi's Stitches
+        </div>
+        <p class="footer-brand-desc">A social enterprise from Mumbai, India — creating dignified livelihoods for skilled grandmothers through the art of hand embroidery.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Shop</div>
+        <ul>
+          <li><a href="shop.html">All Shirts</a></li>
+          <li><a href="custom-order.html">Custom Orders</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Learn</div>
+        <ul>
+          <li><a href="our-story.html">Our Story</a></li>
+          <li><a href="index.html#process">How It's Made</a></li>
+          <li><a href="index.html#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Help</div>
+        <ul>
+          <li><a href="#">Shipping &amp; Returns</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Dadi's Stitches. Made with ♥ and thread. A Social Enterprise from Mumbai, India.</p>
+      <div class="footer-tagline">Stitched with love. Worn with purpose.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function openMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  window.addEventListener('scroll', () => {
+    const el = document.getElementById('scrollProgress');
+    if (el) { const p = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100; el.style.width = p + '%'; }
+    document.getElementById('mainNav')?.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+  function selectFabric(btn) {
+    document.querySelectorAll('.fabric-chip').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+  function toggleStyle(btn) { btn.classList.toggle('selected'); }
+
+  function handleUpload(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const preview = document.getElementById('uploadPreview');
+    const reader = new FileReader();
+    reader.onload = e => {
+      preview.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-width:200px; max-height:160px; border-radius:8px; object-fit:contain; border:1px solid var(--border);" /><p style="font-size:0.78rem; color:var(--sage); margin-top:8px; font-weight:600;">✓ ${file.name}</p>`;
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function submitOrder(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Sending…';
+    btn.disabled = true;
+    setTimeout(() => {
+      document.getElementById('orderForm').style.display = 'none';
+      document.getElementById('formSuccess').classList.add('show');
+      window.scrollTo({ top: document.getElementById('order-form').offsetTop - 80, behavior: 'smooth' });
+    }, 1800);
+  }
+</script>
+</body>
+</html>

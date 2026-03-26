@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Story — Dadi's Stitches | Where Every Stitch Has a Soul</title>
+  <meta name="description" content="Meet the grandmothers behind every shirt. Learn how Dadi's Stitches was born from a vision of dignity, craft, and love — and why every rupee you spend matters." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- STORY PAGE SPECIFIC ---- */
+    .story-hero {
+      background: linear-gradient(135deg, #FFF8EF 0%, #FDEBD0 55%, #F8D5A8 100%);
+      padding: 100px 0 72px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .story-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 60%, rgba(200,151,58,.06) 0%, transparent 55%),
+                  radial-gradient(ellipse at 80% 20%, rgba(196,113,79,.05) 0%, transparent 50%);
+    }
+    .story-hero-content { position: relative; z-index: 1; }
+    .story-hero h1 { color: var(--brown-dark); margin-bottom: 20px; }
+    .story-hero h1 em {
+      background: linear-gradient(90deg, var(--terracotta), #C8973A, var(--terracotta));
+      background-size: 300% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-shift 4s ease infinite;
+    }
+    .story-hero p { color: var(--text-mid); font-size: 1.05rem; max-width: 580px; margin: 0 auto 36px; line-height: 1.7; }
+
+    /* Floating petals animation */
+    .petal {
+      position: absolute;
+      width: 12px; height: 12px;
+      border-radius: 0 50% 0 50%;
+      animation: petal-fall linear infinite;
+      pointer-events: none;
+    }
+    @keyframes petal-fall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.7; }
+      90% { opacity: 0.4; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* Origin story */
+    .origin-section { background: var(--cream); padding: 100px 0; }
+    .origin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .origin-image-box {
+      border-radius: var(--radius-lg);
+      background: linear-gradient(145deg, #F0E8D8 0%, #E0D0B8 100%);
+      min-height: 520px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .origin-image-box::after {
+      content: '"Stitching lives together"';
+      position: absolute; bottom: 28px; left: 0; right: 0;
+      text-align: center;
+      font-family: var(--font-script);
+      font-size: 1.2rem; color: var(--brown-mid);
+    }
+    .origin-stat-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--peach-light); border: 1px solid var(--peach);
+      border-radius: var(--radius-pill);
+      padding: 6px 16px;
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--brown-mid);
+      margin-bottom: 8px;
+    }
+
+    /* Timeline */
+    .timeline-section { background: var(--warm-white); padding: 100px 0; }
+    .timeline { position: relative; max-width: 800px; margin: 60px auto 0; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--terracotta), var(--gold), var(--sage));
+      transform: translateX(-50%);
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      gap: 0;
+      align-items: center;
+      margin-bottom: 64px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .timeline-item.visible { opacity: 1; transform: none; }
+    .timeline-item:nth-child(odd) .timeline-content { grid-column: 1; text-align: right; padding-right: 40px; }
+    .timeline-item:nth-child(odd) .timeline-empty { grid-column: 3; }
+    .timeline-item:nth-child(even) .timeline-content { grid-column: 3; text-align: left; padding-left: 40px; }
+    .timeline-item:nth-child(even) .timeline-empty { grid-column: 1; }
+    .timeline-dot {
+      grid-column: 2;
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid var(--terracotta);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-serif); font-weight: 700;
+      font-size: 0.75rem; color: var(--terracotta);
+      box-shadow: 0 0 0 6px rgba(196,113,79,.1);
+      justify-self: center;
+      transition: all 0.4s ease;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    .timeline-item.visible .timeline-dot {
+      box-shadow: 0 0 0 10px rgba(196,113,79,.12);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .timeline-year {
+      font-family: var(--font-serif);
+      font-size: 1.8rem; font-weight: 700;
+      color: var(--terracotta);
+      margin-bottom: 8px;
+    }
+    .timeline-title { font-family: var(--font-serif); font-size: 1.1rem; color: var(--brown-dark); margin-bottom: 6px; }
+    .timeline-text { font-size: 0.9rem; color: var(--text-mid); line-height: 1.7; }
+
+    /* Dadis grid */
+    .dadis-section { background: var(--paper); padding: 100px 0; }
+    .dadis-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 56px; }
+    .dadi-card {
+      background: white; border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      overflow: hidden; box-shadow: var(--shadow-card);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s ease;
+    }
+    .dadi-card:hover { transform: translateY(-8px) scale(1.01); box-shadow: var(--shadow-lg); }
+    .dadi-card-top {
+      height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .dadi-card-body { padding: 24px; }
+    .dadi-card-name { font-family: var(--font-serif); font-size: 1.15rem; color: var(--brown-dark); margin-bottom: 4px; }
+    .dadi-card-sub { font-size: 0.78rem; color: var(--text-light); margin-bottom: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .dadi-card-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.72rem; font-weight: 600;
+      padding: 3px 10px; border-radius: var(--radius-pill);
+      background: var(--sage-bg); color: var(--sage);
+      border: 1px solid rgba(91,122,82,.2);
+    }
+    .dadi-card-quote { font-family: var(--font-script); font-size: 1.05rem; color: var(--terracotta); line-height: 1.5; }
+
+    /* Values section */
+    .values-section { background: var(--brown-dark); padding: 100px 0; position: relative; overflow: hidden; }
+    .values-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(200,151,58,.07) 0%, transparent 55%);
+    }
+    .values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; margin-top: 56px; position: relative; }
+    .value-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+    .value-card:hover { background: rgba(255,255,255,.07); border-color: rgba(200,151,58,.3); transform: translateY(-4px); }
+    .value-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: rgba(200,151,58,.12);
+      border: 1.5px solid rgba(200,151,58,.3);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .value-card h3 { color: var(--gold-light); font-size: 1.15rem; margin-bottom: 12px; }
+    .value-card p { color: rgba(255,255,255,.55); font-size: 0.9rem; line-height: 1.7; }
+
+    /* Impact counters */
+    .impact-hero { background: var(--sage-bg); padding: 80px 0; }
+    .impact-counters { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; text-align: center; }
+    .impact-counter strong {
+      display: block;
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      color: var(--brown-dark);
+      margin-bottom: 6px;
+      transition: all 0.3s ease;
+    }
+    .impact-counter span { font-size: 0.82rem; color: var(--text-light); letter-spacing: 0.04em; }
+
+    /* CTA band */
+    .story-cta { background: var(--cream); padding: 80px 0; text-align: center; }
+    .story-cta h2 { margin-bottom: 16px; }
+    .story-cta p { color: var(--text-mid); max-width: 560px; margin: 0 auto 36px; }
+    .story-cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    @media (max-width: 768px) {
+      .origin-grid { grid-template-columns: 1fr; gap: 32px; }
+      .dadis-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr; gap: 20px; }
+      .impact-counters { grid-template-columns: repeat(2,1fr); gap: 20px; }
+      .timeline::before { left: 24px; }
+      .timeline-item { grid-template-columns: 48px 1fr; }
+      .timeline-item:nth-child(odd) .timeline-content,
+      .timeline-item:nth-child(even) .timeline-content { grid-column: 2; text-align: left; padding: 0 0 0 20px; }
+      .timeline-item:nth-child(odd) .timeline-empty,
+      .timeline-item:nth-child(even) .timeline-empty { display: none; }
+      .timeline-dot { grid-column: 1; }
+      .story-hero { padding: 72px 0 56px; }
+      .story-hero h1 { font-size: clamp(1.8rem, 7vw, 2.6rem); }
+      .story-cta-actions { flex-direction: column; }
+      .story-cta-actions .btn { width: 100%; text-align: center; }
+      .origin-image-box { min-height: 300px; }
+      .value-card { padding: 24px 20px; }
+    }
+    @media (max-width: 480px) {
+      .dadis-grid { grid-template-columns: 1fr; }
+      .impact-counters { grid-template-columns: 1fr 1fr; }
+      .timeline-item { margin-bottom: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Floating petals -->
+<div id="petals" aria-hidden="true"></div>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announcement-bar">
+  <div class="announcement-bar-inner">
+    <span>✦ Free shipping on orders over ₹2,500</span><span>·</span>
+    <span>Each stitch takes 4 hours of love &amp; skill</span><span>·</span>
+    <span>Made by India's grandmothers ✦</span><span>·</span>
+    <span>✦ Free shipping on orders over ₹2,500</span><span>·</span>
+    <span>Each stitch takes 4 hours of love &amp; skill</span><span>·</span>
+    <span>Made by India's grandmothers ✦</span><span>·</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="logo.jpeg" alt="Dadi's Stitches" class="nav-logo-img" />
+      Dadi's Stitches
+    </a>
+    <div class="nav-links">
+      <a href="shop.html">Shop</a>
+      <a href="our-story.html" class="active">Our Story</a>
+      <a href="custom-order.html">Custom Orders</a>
+      <a href="index.html#process">How It's Made</a>
+    </div>
+    <div class="nav-actions">
+      <a href="shop.html" class="nav-cta">Shop Now</a>
+      <button class="nav-cart" onclick="alert('Cart coming soon!')" aria-label="Cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-badge">0</span>
+      </button>
+      <button class="nav-hamburger" onclick="openMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-head">
+    <a href="index.html" class="nav-logo" style="font-size:1.2rem;">
+      <img src="logo.jpeg" alt="Dadi's Stitches" class="nav-logo-img" />
+      Dadi's Stitches
+    </a>
+    <button class="mobile-close" onclick="closeMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu-links">
+    <a href="shop.html" onclick="closeMenu()">Shop</a>
+    <a href="our-story.html" onclick="closeMenu()">Our Story</a>
+    <a href="custom-order.html" onclick="closeMenu()">Custom Orders</a>
+    <a href="index.html#process" onclick="closeMenu()">How It's Made</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="story-hero">
+  <div class="container story-hero-content">
+    <div class="section-label" style="justify-content:center; color:var(--gold-light);">Our Story</div>
+    <h1>Behind every stitch is<br/><em>a lifetime of love.</em></h1>
+    <p>Dadi's Stitches was born from a simple belief: that the most skilled hands in India belong to its grandmothers — and they deserve to be celebrated, not forgotten.</p>
+    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+      <a href="shop.html" class="btn btn-primary btn-lg">Shop Their Work</a>
+      <a href="#dadis" class="btn btn-ghost btn-lg">Meet Our Dadis</a>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT COUNTERS -->
+<div class="impact-hero">
+  <div class="container">
+    <div class="impact-counters">
+      <div class="impact-counter reveal reveal-delay-1">
+        <strong class="count-anim" data-target="12">0</strong>
+        <span>Dadis Employed</span>
+      </div>
+      <div class="impact-counter reveal reveal-delay-2">
+        <strong class="count-anim" data-target="340">0</strong>
+        <span>Shirts Stitched</span>
+      </div>
+      <div class="impact-counter reveal reveal-delay-3">
+        <strong class="count-anim" data-target="4">0</strong>
+        <span>Hours Per Shirt, Minimum</span>
+      </div>
+      <div class="impact-counter reveal reveal-delay-4">
+        <strong class="count-anim" data-target="400">0</strong>
+        <span>₹ Fair Wage Per Shirt</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ORIGIN STORY -->
+<section class="origin-section">
+  <div class="container">
+    <div class="origin-grid">
+      <div class="origin-image-box reveal-left">
+        <svg width="280" height="360" viewBox="0 0 280 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Chair -->
+          <rect x="50" y="270" width="180" height="10" rx="5" fill="#A0714F" opacity="0.35"/>
+          <rect x="70" y="280" width="12" height="70" rx="6" fill="#A0714F" opacity="0.3"/>
+          <rect x="198" y="280" width="12" height="70" rx="6" fill="#A0714F" opacity="0.3"/>
+          <!-- Body/dress -->
+          <path d="M100 250 Q100 300 82 350 L198 350 Q180 300 180 250 Z" fill="#C4928A" opacity="0.25"/>
+          <!-- Torso -->
+          <rect x="110" y="200" width="60" height="58" rx="18" fill="#E8C4A0" opacity="0.65"/>
+          <!-- Neck -->
+          <rect x="134" y="186" width="14" height="18" rx="7" fill="#E8C4A0" opacity="0.65"/>
+          <!-- Head -->
+          <ellipse cx="141" cy="166" rx="30" ry="32" fill="#E8C4A0" opacity="0.75"/>
+          <!-- Grey hair -->
+          <path d="M114 157 Q118 136 141 133 Q164 136 168 157 Q163 145 141 143 Q119 145 114 157Z" fill="#C8C0B8" opacity="0.8"/>
+          <!-- Bun -->
+          <circle cx="141" cy="138" r="13" fill="#C0B8B0" opacity="0.65"/>
+          <!-- Face -->
+          <circle cx="132" cy="165" r="2.5" fill="#C4928A" opacity="0.5"/>
+          <circle cx="151" cy="165" r="2.5" fill="#C4928A" opacity="0.5"/>
+          <path d="M135 176 Q141 181 148 176" stroke="#C4928A" stroke-width="1.5" fill="none" opacity="0.55" stroke-linecap="round"/>
+          <!-- Glasses -->
+          <circle cx="133" cy="164" r="6.5" fill="none" stroke="#8B6A50" stroke-width="1.5" opacity="0.5"/>
+          <circle cx="150" cy="164" r="6.5" fill="none" stroke="#8B6A50" stroke-width="1.5" opacity="0.5"/>
+          <line x1="139.5" y1="164" x2="143.5" y2="164" stroke="#8B6A50" stroke-width="1.5" opacity="0.5"/>
+          <!-- Arms -->
+          <path d="M110 218 Q84 232 78 256" stroke="#E8C4A0" stroke-width="15" stroke-linecap="round" fill="none" opacity="0.65"/>
+          <path d="M170 218 Q196 232 202 256" stroke="#E8C4A0" stroke-width="15" stroke-linecap="round" fill="none" opacity="0.65"/>
+          <!-- Hands -->
+          <ellipse cx="77" cy="260" rx="10" ry="8" fill="#E8C4A0" opacity="0.65"/>
+          <ellipse cx="203" cy="260" rx="10" ry="8" fill="#E8C4A0" opacity="0.65"/>
+          <!-- Fabric in lap -->
+          <ellipse cx="141" cy="276" rx="48" ry="22" fill="white" opacity="0.55"/>
+          <!-- Embroidery on fabric -->
+          <circle cx="131" cy="274" r="5.5" fill="#F5C842" opacity="0.65"/>
+          <circle cx="146" cy="271" r="4.5" fill="#C4714F" opacity="0.6"/>
+          <circle cx="156" cy="277" r="5.5" fill="#F5C842" opacity="0.65"/>
+          <path d="M124 282 Q141 287 159 282" stroke="#6B9060" stroke-width="1.5" fill="none" opacity="0.55" stroke-linecap="round"/>
+          <!-- Needle -->
+          <line x1="201" y1="254" x2="186" y2="270" stroke="#8B6A50" stroke-width="2" stroke-linecap="round" opacity="0.65"/>
+          <circle cx="202" cy="253" r="2.5" fill="#C8973A" opacity="0.65"/>
+          <!-- Thread -->
+          <path d="M202 255 Q208 248 213 252" stroke="#C4714F" stroke-width="1" fill="none" opacity="0.45" stroke-dasharray="2 1.5"/>
+        </svg>
+      </div>
+      <div class="reveal-right">
+        <div class="section-label">How It All Began</div>
+        <h2>A chai, a conversation,<br/><em>and a calling.</em></h2>
+        <p>In 2024, our founders met Savitri Dadi — a 67-year-old embroidery artist from Mumbai who had sewn thousands of designs in her lifetime but earned almost nothing from her craft. She had no platform. No market. Only her skill, and 55 years of patient practice.</p>
+        <p>That meeting changed everything. We realised that India's grandmothers carry a form of art that is irreplaceable — and they deserve fair wages, dignity, and a global audience.</p>
+        <p>Dadi's Stitches was our answer.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin: 24px 0;">
+          <span class="origin-stat-pill">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="6"/></svg>
+            Mumbai, India
+          </span>
+          <span class="origin-stat-pill">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="6"/></svg>
+            Social Enterprise
+          </span>
+          <span class="origin-stat-pill">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="6"/></svg>
+            Founded 2024
+          </span>
+        </div>
+        <a href="shop.html" class="btn btn-primary">Wear Their Story</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <div class="container">
+    <div class="text-center reveal">
+      <div class="section-label" style="justify-content:center;">Our Journey</div>
+      <h2>From a single Dadi<br/><em>to a movement</em></h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-year">2024</div>
+          <div class="timeline-title">The First Meeting</div>
+          <p class="timeline-text">We met Savitri Dadi. Her skill left us speechless. Her wage left us heartbroken. We knew something had to be done.</p>
+        </div>
+        <div class="timeline-dot">Jan</div>
+        <div class="timeline-empty"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-empty"></div>
+        <div class="timeline-dot">Apr</div>
+        <div class="timeline-content">
+          <div class="timeline-year">2024</div>
+          <div class="timeline-title">The Network Grows</div>
+          <p class="timeline-text">Word spread through neighbourhoods. 4 more Dadis joined — Kamla, Radha, Meera, and Shanti — each with decades of mastery.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-year">2024</div>
+          <div class="timeline-title">First Shirts, First Tears</div>
+          <p class="timeline-text">Our first 10 shirts sold out in 3 days. Customers cried reading the Dadi notes. We knew we were onto something real.</p>
+        </div>
+        <div class="timeline-dot">Sep</div>
+        <div class="timeline-empty"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-empty"></div>
+        <div class="timeline-dot">Now</div>
+        <div class="timeline-content">
+          <div class="timeline-year">2025</div>
+          <div class="timeline-title">12 Dadis & Growing</div>
+          <p class="timeline-text">340+ shirts stitched. ₹400 fair wage per shirt, guaranteed. A waitlist of Dadis wanting to join. A movement that started over chai.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEET THE DADIS -->
+<section class="dadis-section" id="dadis">
+  <div class="container">
+    <div class="text-center reveal">
+      <div class="section-label" style="justify-content:center;">The Makers</div>
+      <h2>Meet the women behind<br/><em>every shirt you love</em></h2>
+    </div>
+    <div class="dadis-grid">
+
+      <div class="dadi-card reveal reveal-delay-1">
+        <div class="dadi-card-top" style="background:linear-gradient(145deg,#EEE8DF,#DDD4C5);">
+          <svg width="100" height="130" viewBox="0 0 100 130" fill="none">
+            <ellipse cx="50" cy="55" rx="22" ry="24" fill="#E8C4A0" opacity="0.75"/>
+            <path d="M32 50 Q34 36 50 34 Q66 36 68 50 Q65 40 50 38 Q35 40 32 50Z" fill="#C8C0B8" opacity="0.8"/>
+            <circle cx="50" cy="38" r="10" fill="#C0B8B0" opacity="0.65"/>
+            <circle cx="43" cy="55" r="2" fill="#C4928A" opacity="0.5"/>
+            <circle cx="57" cy="55" r="2" fill="#C4928A" opacity="0.5"/>
+            <path d="M45 63 Q50 67 55 63" stroke="#C4928A" stroke-width="1.2" fill="none" opacity="0.6"/>
+            <!-- Sunflower embroidery on lap -->
+            <circle cx="50" cy="105" r="10" fill="#F5C842" opacity="0.7"/>
+            <circle cx="50" cy="105" r="5" fill="#7A4A10" opacity="0.7"/>
+            <path d="M50 90 Q47 82 50 79 Q53 82 50 90Z" fill="#F5C842" opacity="0.7"/>
+            <path d="M50 120 Q47 128 50 131 Q53 128 50 120Z" fill="#F5C842" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="dadi-card-body">
+          <div class="dadi-card-name">Savitri Dadi</div>
+          <div class="dadi-card-sub">
+            <span>67 years old</span>
+            <span>·</span>
+            <span>55 yrs embroidery</span>
+          </div>
+          <span class="dadi-card-tag">Floral Motifs · Sunflowers</span>
+          <p class="dadi-card-quote" style="margin-top:12px;">"I stitch for families I'll never meet. That makes my heart full."</p>
+        </div>
+      </div>
+
+      <div class="dadi-card reveal reveal-delay-2">
+        <div class="dadi-card-top" style="background:linear-gradient(145deg,#D4E0F0,#B8CCDC);">
+          <svg width="100" height="130" viewBox="0 0 100 130" fill="none">
+            <ellipse cx="50" cy="55" rx="22" ry="24" fill="#E8C4A0" opacity="0.75"/>
+            <path d="M32 50 Q34 36 50 34 Q66 36 68 50 Q65 40 50 38 Q35 40 32 50Z" fill="#C8C0B8" opacity="0.75"/>
+            <circle cx="50" cy="38" r="10" fill="#C0B8B0" opacity="0.6"/>
+            <!-- Wildflower embroidery -->
+            <path d="M30 95 Q40 80 50 85 Q60 80 70 95" stroke="#A8C49E" stroke-width="2" fill="none"/>
+            <circle cx="35" cy="97" r="5" fill="white" opacity="0.8"/><circle cx="35" cy="97" r="2.5" fill="#F5C842" opacity="0.8"/>
+            <circle cx="50" cy="86" r="5" fill="white" opacity="0.8"/><circle cx="50" cy="86" r="2.5" fill="#F0B8D0" opacity="0.8"/>
+            <circle cx="65" cy="97" r="5" fill="white" opacity="0.8"/><circle cx="65" cy="97" r="2.5" fill="#F5C842" opacity="0.8"/>
+          </svg>
+        </div>
+        <div class="dadi-card-body">
+          <div class="dadi-card-name">Kamla Dadi</div>
+          <div class="dadi-card-sub"><span>62 years old</span><span>·</span><span>35 yrs embroidery</span></div>
+          <span class="dadi-card-tag">Wildflowers · Collar Work</span>
+          <p class="dadi-card-quote" style="margin-top:12px;">"Every flower I stitch is a prayer. A small blessing for the one who'll wear it."</p>
+        </div>
+      </div>
+
+      <div class="dadi-card reveal reveal-delay-3">
+        <div class="dadi-card-top" style="background:linear-gradient(145deg,#D4E8D0,#B8D0B4);">
+          <svg width="100" height="130" viewBox="0 0 100 130" fill="none">
+            <ellipse cx="50" cy="55" rx="22" ry="24" fill="#E8C4A0" opacity="0.75"/>
+            <path d="M32 50 Q34 36 50 34 Q66 36 68 50 Q65 40 50 38 Q35 40 32 50Z" fill="#C8C0B8" opacity="0.75"/>
+            <circle cx="50" cy="38" r="10" fill="#C0B8B0" opacity="0.6"/>
+            <!-- Daisy embroidery -->
+            <circle cx="50" cy="100" r="4" fill="#EDD9A3" opacity="0.9"/>
+            <ellipse cx="50" cy="88" rx="3.5" ry="6" fill="white" opacity="0.9" transform="rotate(0 50 100)"/>
+            <ellipse cx="50" cy="88" rx="3.5" ry="6" fill="white" opacity="0.9" transform="rotate(45 50 100)"/>
+            <ellipse cx="50" cy="88" rx="3.5" ry="6" fill="white" opacity="0.9" transform="rotate(90 50 100)"/>
+            <ellipse cx="50" cy="88" rx="3.5" ry="6" fill="white" opacity="0.9" transform="rotate(135 50 100)"/>
+            <ellipse cx="50" cy="88" rx="3.5" ry="6" fill="white" opacity="0.9" transform="rotate(180 50 100)"/>
+            <ellipse cx="50" cy="88" rx="3.5" ry="6" fill="white" opacity="0.9" transform="rotate(225 50 100)"/>
+          </svg>
+        </div>
+        <div class="dadi-card-body">
+          <div class="dadi-card-name">Radha Dadi</div>
+          <div class="dadi-card-sub"><span>58 years old</span><span>·</span><span>28 yrs embroidery</span></div>
+          <span class="dadi-card-tag">Daisies · Fine Detail Work</span>
+          <p class="dadi-card-quote" style="margin-top:12px;">"I learned from my mother. Now my hands carry two lifetimes of knowledge."</p>
+        </div>
+      </div>
+
+      <div class="dadi-card reveal reveal-delay-1">
+        <div class="dadi-card-top" style="background:linear-gradient(145deg,#2A2A2A,#1A1A1A);">
+          <svg width="100" height="130" viewBox="0 0 100 130" fill="none">
+            <ellipse cx="50" cy="55" rx="22" ry="24" fill="#E8C4A0" opacity="0.75"/>
+            <path d="M32 50 Q34 36 50 34 Q66 36 68 50 Q65 40 50 38 Q35 40 32 50Z" fill="#C8C0B8" opacity="0.75"/>
+            <circle cx="50" cy="38" r="10" fill="#C0B8B0" opacity="0.6"/>
+            <!-- Vase with flowers -->
+            <path d="M45 120 L44 103 Q44 98 50 98 Q56 98 56 103 L55 120Z" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
+            <path d="M43 120 L57 120" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="44" cy="87" r="5" fill="#C4714F" opacity="0.8"/>
+            <ellipse cx="44" cy="80" rx="2.5" ry="4" fill="#E8908A" transform="rotate(0 44 87)"/>
+            <ellipse cx="44" cy="80" rx="2.5" ry="4" fill="#E8908A" transform="rotate(90 44 87)"/>
+            <ellipse cx="44" cy="80" rx="2.5" ry="4" fill="#E8908A" transform="rotate(180 44 87)"/>
+            <circle cx="56" cy="84" r="4.5" fill="#EDD9A3"/>
+          </svg>
+        </div>
+        <div class="dadi-card-body">
+          <div class="dadi-card-name">Meera Dadi</div>
+          <div class="dadi-card-sub"><span>70 years old</span><span>·</span><span>50 yrs embroidery</span></div>
+          <span class="dadi-card-tag">Vintage Botanicals · Vase Motifs</span>
+          <p class="dadi-card-quote" style="margin-top:12px;">"Fifty years and I still get surprised by what my needle finds in the cloth."</p>
+        </div>
+      </div>
+
+      <div class="dadi-card reveal reveal-delay-2">
+        <div class="dadi-card-top" style="background:linear-gradient(145deg,#F0E8D0,#DDD0B4);">
+          <svg width="100" height="130" viewBox="0 0 100 130" fill="none">
+            <ellipse cx="50" cy="55" rx="22" ry="24" fill="#E8C4A0" opacity="0.75"/>
+            <path d="M32 50 Q34 36 50 34 Q66 36 68 50 Q65 40 50 38 Q35 40 32 50Z" fill="#C8C0B8" opacity="0.75"/>
+            <circle cx="50" cy="38" r="10" fill="#C0B8B0" opacity="0.6"/>
+            <!-- Poppy embroidery -->
+            <circle cx="50" cy="100" r="10" fill="#C4714F" opacity="0.85"/>
+            <circle cx="50" cy="100" r="5" fill="#7A2010"/>
+            <circle cx="50" cy="100" r="2" fill="#C89020"/>
+            <path d="M50 90 Q47 84 50 81 Q53 84 50 90Z" fill="#C4714F"/>
+            <path d="M50 110 Q47 116 50 119 Q53 116 50 110Z" fill="#C4714F"/>
+            <path d="M40 100 Q34 97 31 100 Q34 103 40 100Z" fill="#C4714F"/>
+            <path d="M60 100 Q66 97 69 100 Q66 103 60 100Z" fill="#C4714F"/>
+          </svg>
+        </div>
+        <div class="dadi-card-body">
+          <div class="dadi-card-name">Shanti Dadi</div>
+          <div class="dadi-card-sub"><span>64 years old</span><span>·</span><span>38 yrs embroidery</span></div>
+          <span class="dadi-card-tag">Himalayan Flora · Poppies</span>
+          <p class="dadi-card-quote" style="margin-top:12px;">"Each poppy takes me back to the mountains of my childhood. I stitch my memories."</p>
+        </div>
+      </div>
+
+      <div class="dadi-card reveal reveal-delay-3">
+        <div class="dadi-card-top" style="background:linear-gradient(145deg,#E8D4B8,#D4BC98); align-items:center; justify-content:center; gap:12px; flex-direction:column;">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+            <circle cx="28" cy="28" r="27" stroke="#C4714F" stroke-width="1.5" stroke-dasharray="6 4"/>
+            <path d="M28 16 L28 40 M16 28 L40 28" stroke="#C4714F" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <span style="font-family:var(--font-script); font-size:1rem; color:var(--brown-mid); text-align:center;">+ 7 more Dadis<br/>joining soon</span>
+        </div>
+        <div class="dadi-card-body">
+          <div class="dadi-card-name">Could Be Your Dadi</div>
+          <div class="dadi-card-sub"><span>Mumbai &amp; Beyond</span></div>
+          <span class="dadi-card-tag">All Specialties Welcome</span>
+          <p style="font-size:0.88rem; color:var(--text-mid); margin-top:12px;">Know a skilled grandmother? We'd love to meet her. We're always growing our circle of makers.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+  <div class="container">
+    <div class="text-center reveal">
+      <div class="section-label" style="justify-content:center; color:var(--gold-light);">What We Stand For</div>
+      <h2 style="color:white;">Three promises we<br/><em style="color:var(--gold-light);">will never break</em></h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4 Q20 8 28 8 Q28 20 16 28 Q4 20 4 8 Q12 8 16 4Z" stroke="rgba(200,151,58,.7)" stroke-width="1.5" fill="rgba(200,151,58,.1)"/><path d="M10 16 L14 20 L22 12" stroke="rgba(200,151,58,.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Fair Wages, Always</h3>
+        <p>₹400 guaranteed per shirt — before we take a single rupee of profit. Our Dadis are artists. They are paid like artists.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M28 6 L12 22 L10 30 L18 28 L34 12 Z" stroke="rgba(200,151,58,.7)" stroke-width="1.5" fill="rgba(200,151,58,.1)"/><circle cx="28" cy="6" r="3" fill="none" stroke="rgba(200,151,58,.6)" stroke-width="1.2"/></svg>
+        </div>
+        <h3>Zero Shortcuts</h3>
+        <p>Every design is stitched by hand. A minimum of 4 hours per shirt. No machines. No shortcuts. No exceptions.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-3">
+        <div class="value-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="12" r="7" stroke="rgba(200,151,58,.7)" stroke-width="1.5" fill="rgba(200,151,58,.08)"/><path d="M6 30 Q6 22 16 22 Q26 22 26 30" stroke="rgba(200,151,58,.7)" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+        </div>
+        <h3>Dignity, Not Charity</h3>
+        <p>Our Dadis are not charity cases. They are skilled professionals whose craft is their pride. We simply give it a market.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="story-cta">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label" style="justify-content:center;">Ready to join the story?</div>
+      <h2>Wear a piece of<br/><em>India's living heritage</em></h2>
+      <p>Every shirt you buy directly funds a fair wage, keeps a craft alive, and tells a grandmother her life's work still matters.</p>
+      <div class="story-cta-actions">
+        <a href="shop.html" class="btn btn-primary btn-lg">Browse the Collection</a>
+        <a href="custom-order.html" class="btn btn-ghost btn-lg">Start a Custom Order</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-logo">
+          <img src="logo.jpeg" alt="Dadi's Stitches" style="width:32px;height:32px;object-fit:contain;border-radius:50%;" />
+          Dadi's Stitches
+        </div>
+        <p class="footer-brand-desc">A social enterprise from Mumbai, India — creating dignified livelihoods for skilled grandmothers through the art of hand embroidery.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Shop</div>
+        <ul>
+          <li><a href="shop.html">All Shirts</a></li>
+          <li><a href="shop.html">Tees</a></li>
+          <li><a href="shop.html">Seersucker</a></li>
+          <li><a href="custom-order.html">Custom Orders</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Learn</div>
+        <ul>
+          <li><a href="our-story.html">Our Story</a></li>
+          <li><a href="our-story.html#dadis">Meet the Dadis</a></li>
+          <li><a href="index.html#process">How It's Made</a></li>
+          <li><a href="index.html#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Help</div>
+        <ul>
+          <li><a href="#">Shipping &amp; Returns</a></li>
+          <li><a href="#">Size Guide</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Dadi's Stitches. Made with ♥ and thread. A Social Enterprise from Mumbai, India.</p>
+      <div class="footer-tagline">Stitched with love. Worn with purpose.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function openMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // Scroll progress
+  window.addEventListener('scroll', () => {
+    const el = document.getElementById('scrollProgress');
+    if (el) { const p = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100; el.style.width = p + '%'; }
+    document.getElementById('mainNav')?.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Intersection observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .timeline-item').forEach(el => observer.observe(el));
+
+  // Count-up animation
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        let current = 0;
+        const step = target / 60;
+        const timer = setInterval(() => {
+          current = Math.min(current + step, target);
+          el.textContent = Math.round(current) + (target >= 100 ? '+' : '');
+          if (current >= target) clearInterval(timer);
+        }, 25);
+        countObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.count-anim').forEach(el => countObserver.observe(el));
+
+  // Floating petals
+  const petalContainer = document.getElementById('petals');
+  const colors = ['#F5C842','#C4714F','#C4928A','#6B9060','#EDD9A3'];
+  for (let i = 0; i < 15; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `
+      left: ${Math.random()*100}%;
+      background: ${colors[Math.floor(Math.random()*colors.length)]};
+      opacity: 0.18;
+      width: ${6+Math.random()*10}px;
+      height: ${6+Math.random()*10}px;
+      animation-duration: ${8+Math.random()*14}s;
+      animation-delay: ${Math.random()*10}s;
+      position: fixed; z-index: 0; pointer-events: none;
+      border-radius: 0 50% 0 50%;
+    `;
+    p.style.animation = `petal-fall ${8+Math.random()*14}s linear ${Math.random()*10}s infinite`;
+    petalContainer.appendChild(p);
+  }
+</script>
+</body>
+</html>
