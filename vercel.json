@@ -1,13 +1,8 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/website/index.html" },
-    { "source": "/shop", "destination": "/website/shop.html" },
-    { "source": "/shop.html", "destination": "/website/shop.html" },
-    { "source": "/product", "destination": "/website/product.html" },
-    { "source": "/product.html", "destination": "/website/product.html" },
-    { "source": "/our-story", "destination": "/website/our-story.html" },
-    { "source": "/our-story.html", "destination": "/website/our-story.html" },
-    { "source": "/custom-order", "destination": "/website/custom-order.html" },
-    { "source": "/custom-order.html", "destination": "/website/custom-order.html" }
+    { "source": "/shop", "destination": "/shop.html" },
+    { "source": "/product", "destination": "/product.html" },
+    { "source": "/our-story", "destination": "/our-story.html" },
+    { "source": "/custom-order", "destination": "/custom-order.html" }
   ]
 }
